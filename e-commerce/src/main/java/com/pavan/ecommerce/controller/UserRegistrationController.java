@@ -27,6 +27,7 @@ public class UserRegistrationController {
 		} catch (UserAlreadyExistsException e) {
 
 		}
+		
 		return ResponseEntity.ok(savedUser);
 	}
 }
