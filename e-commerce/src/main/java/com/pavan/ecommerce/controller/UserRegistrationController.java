@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pavan.ecommerce.entity.StatusEnum;
 import com.pavan.ecommerce.entity.User;
+import com.pavan.ecommerce.exceptions.EmailPasswordException;
 import com.pavan.ecommerce.exceptions.UserAlreadyExistsException;
 import com.pavan.ecommerce.service.UserService;
 import com.pavan.ecommerce.web.dto.LoginDto;
@@ -36,8 +37,27 @@ public class UserRegistrationController {
 		return ResponseEntity.ok(responseDto);
 	}
 
-//	@PostMapping("/login")
-//	public ResponseEntity<Responsedto> login(@RequestBody LoginDto loginDto) {
-//		
-//	}
+	@PostMapping("/login")
+	public ResponseEntity<Responsedto> login(@RequestBody LoginDto loginDto) {
+		User existingUser = null;
+		Responsedto responseDto = new Responsedto(StatusEnum.RS_OK, "Login successfull");
+		try {
+			existingUser = userService.login(loginDto);
+
+		} catch (Exception e) {
+			System.out.println("Exception: " + e);
+			responseDto.setStatus(StatusEnum.RS_ERROR);
+			responseDto.setErrorDescription("Email or password is incorrect");
+			return ResponseEntity.ok(responseDto);
+		}
+		return ResponseEntity.ok(responseDto);
+//		if (existingUser == null) {
+//			responseDto.setStatus(StatusEnum.RS_ERROR);
+//			responseDto.setErrorDescription("Email or password is incorrect");
+//			return ResponseEntity.ok(responseDto);
+//		} else {
+//
+//			return ResponseEntity.ok(responseDto);
+//		}
+	}
 }
