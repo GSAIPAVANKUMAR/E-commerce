@@ -2,6 +2,8 @@ package com.pavan.ecommerce.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,18 +25,28 @@ public class User {
 	@Column(name = "last_name")
 	private String lastName;
 
+	@Column(name = "email")
 	private String email;
+
+	@Column(name = "password")
 	private String password;
 
+	@Column(name = "role")
+	@Enumerated(EnumType.STRING)
 	private RoleEnum role;
 
 	public User(String firstName, String lastName, String email, String password, RoleEnum role) {
 		super();
+		System.out.println("rOLE IN CONSTRUCTOR" + role);
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
 		this.role = role;
+	}
+
+	public User() {
+		super();
 	}
 
 	public Long getId() {
@@ -77,11 +89,12 @@ public class User {
 		this.password = password;
 	}
 
-	public RoleEnum getRoles() {
+	public RoleEnum getRole() {
 		return role;
 	}
 
-	public void setRoles(RoleEnum role) {
+	public void setRole(RoleEnum role) {
 		this.role = role;
 	}
+
 }
